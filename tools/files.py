@@ -33,3 +33,26 @@ def save_file(path, name, data):
         new_file.write(data)
         logger.debug(f"File {full_path} was saved succesfully")
 
+    
+def get_path_to_file(hash_):
+    full_path = STORAGE_FOLDER + hash_[:2] + '/' + hash_
+    if os.path.isfile(full_path):
+        return full_path
+    logger.error(f"FILE {full_path} not found")    
+    raise IOError(f'File {full_path} doesn\'t exist')
+
+
+def delete_file(hash_):
+    full_path = STORAGE_FOLDER + hash_[:2] + '/' + hash_
+    subfolder = STORAGE_FOLDER + hash_[:2]
+    if os.path.isfile(full_path):
+        os.remove(full_path)
+        logger.debug(f"File {full_path} successfully removed!")
+        try:
+            os.rmdir(subfolder)
+            logger.debug(f"Folder {subfolder} successfully removed!")
+        except OSError:
+            logger.debug(f"Folder {subfolder} is not empty")
+        return True
+    logger.error(f"FILE {full_path} not found")    
+    raise IOError(f'File {full_path} doesn\'t exist')
