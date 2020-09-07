@@ -1,12 +1,19 @@
 from aiohttp import web
-import json 
+from aiohttp_swagger import *
+
+import yaml
 
 from routes import setup_routes
-
 
 app = web.Application()
 setup_routes(app)
 
+setup_swagger(app)
+
 
 if __name__ == '__main__':
-    web.run_app(app, host='127.0.0.1', port=8080)
+    
+    
+    with open('config/app_cfg.yaml') as cfg:
+        data = yaml.safe_load(cfg)
+        web.run_app(app, host=data['HOST'], port=data['PORT'])

@@ -1,6 +1,10 @@
-from views import routes 
+from views import FileDaemon 
 
 
 def setup_routes(app):
-    app.add_routes(routes)
+    daemon = FileDaemon()
+
+    app.router.add_route('GET', '/files', daemon.get)
+    app.router.add_route('POST', '/files', daemon.post)
+    app.router.add_route('DELETE', '/files', daemon.delete)
     

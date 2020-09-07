@@ -1,2 +1,4 @@
 aiohttp==3.6.2
+aiohttp-swagger==1.0.15
 httpie==2.2.0
+pyyaml==5.3.1
