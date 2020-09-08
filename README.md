@@ -24,7 +24,7 @@ pip3 install -r requirements.txt
 ```
 http://localhost:8080/api/doc
 ```
-> For quick tests you may use presaved file - test_files/dog.jpg 
+> For quick tests you may use presaved file - tests/test_files/dog.jpg 
 > and hash - a91e56e5b56f92e3d0ceb62532b3f99c
 
 > If you don't like swagger, you may use httpie 
@@ -34,7 +34,7 @@ http://localhost:8080/api/doc
 * Upload file 
 
 ```bash
-http -f POST http://localhost:8080/files cv@test_files/dog.jpg 
+http -f POST http://localhost:8080/files cv@tests/test_files/dog.jpg 
 ```
 * Download file 
 
