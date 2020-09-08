@@ -18,11 +18,17 @@ class FileDaemon:
         description: This end-point allow to download files.
         tags:
         - Download file
+        parameters:
+        - in: query
+          name: file
         produces:
-        - text/plain
+        - application/octet-stream
         responses:
             "200":
-                description: successful operation. Return "pong" text
+                description: File with the name of specified hash 
+                content-disposition: attachment
+                schema:
+                    type: "file"
             "400":
                 description: Bad request
         """
