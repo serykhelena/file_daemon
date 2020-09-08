@@ -5,10 +5,8 @@ HTTP API that provides following operations with files:
 * download file
 * delete file
 
-> You may change config of service as you want (config/app_cgf.yaml). 
-> Default config: 
->           HOST:   localhost
->           PORT:   8080
+> You may change config as you want (config/app_cgf.yaml). 
+> Default config - localhot:8080
 
 ## Quick start 
 
