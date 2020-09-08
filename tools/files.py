@@ -21,20 +21,36 @@ def create_folder(directory):
             os.mkdir(STORAGE_FOLDER + directory)
             logger.debug(f"Folder '{STORAGE_FOLDER + directory}' was successfully created")
         except OSError as err:
-            logger.error(f"Creation of the directore '{STORAGE_FOLDER + directory}' failed\n{err}")
+            logger.error(f"Creation of the directory '{STORAGE_FOLDER + directory}' failed\n{err}")
     else:
         logger.debug(f"Folder '{STORAGE_FOLDER + directory}' already exist")
 
 
 def save_file(path, name, data):
+    """ Save file into specified directory
+        
+        Args:
+            path    - directory, path. 
+                      format: [subfolder/]
+            name    - file name 
+            data    - file data
+    """
     full_path = STORAGE_FOLDER + path + name 
     create_folder(path)
+    if os.path.isfile(full_path):
+        logger.debug(f"File {full_path} already exists")
+        return 
     with open(full_path, 'wb+') as new_file:
         new_file.write(data)
         logger.debug(f"File {full_path} was saved succesfully")
 
     
 def get_path_to_file(hash_):
+    """ Get path to file by it's hash-name
+        
+        Args:
+            hash_   - hash value [string] 
+    """
     full_path = STORAGE_FOLDER + hash_[:2] + '/' + hash_
     if os.path.isfile(full_path):
         return full_path
@@ -43,6 +59,11 @@ def get_path_to_file(hash_):
 
 
 def delete_file(hash_):
+    """ Delete file by it's hash-name
+        
+        Args:
+            hash_   - hash value [string] 
+    """
     full_path = STORAGE_FOLDER + hash_[:2] + '/' + hash_
     subfolder = STORAGE_FOLDER + hash_[:2]
     if os.path.isfile(full_path):

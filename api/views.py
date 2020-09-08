@@ -15,20 +15,19 @@ class FileDaemon:
     async def get(self, request):
         """
         ---
-        description: This end-point allow to download files.
+        description: This end-point allows to download files.
         tags:
         - Download file
         parameters:
         - in: query
           name: file
+          type: string
+          description: hash of file 
         produces:
         - application/octet-stream
         responses:
             "200":
                 description: File with the name of specified hash 
-                content-disposition: attachment
-                schema:
-                    type: "file"
             "400":
                 description: Bad request
         """
@@ -40,7 +39,12 @@ class FileDaemon:
             return web.Response(text="Use parameter 'file' to specified file hash", status=400)
         
         try:
-            return web.FileResponse(get_path_to_file(file_hash))
+            resp = web.FileResponse(
+                get_path_to_file(file_hash),
+                headers={
+                    'content-disposition': 'attachment; filename="my_fname"'
+                })
+            return resp 
         except IOError as err:
             return web.Response(text=f"File {file_hash} doesn't exist!", status=400)
     
@@ -48,9 +52,16 @@ class FileDaemon:
     async def post(self, request):
         """
         ---
-        description: This end-point allow to upload new files.
+        description: This end-point allows to upload new file.
         tags:
         - Upload file
+        consumes:
+        - multipart/form-data
+        parameters:
+        - in: formData
+          name: upfile
+          type: file
+          description: The file to upload.
         produces:
         - text/plain
         responses:
@@ -61,11 +72,10 @@ class FileDaemon:
         """
         try:
             reader = await request.multipart()
-        except AssertionError as err:
+            client_file = await reader.next()
+            file_data = await client_file.read(decode=True)
+        except (AssertionError, AttributeError):
             return web.Response(text='Uploading file is not found!', status=400)
-
-        client_file = await reader.next()
-        file_data = await client_file.read(decode=True)
 
         file_name = client_file.filename
 
@@ -81,6 +91,11 @@ class FileDaemon:
         description: This end-point allow to delete file.
         tags:
         - Delete file
+        parameters:
+        - in: query
+          name: file
+          type: string
+          description: hash of file 
         produces:
         - text/plain
         responses:
