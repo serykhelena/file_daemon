@@ -29,7 +29,7 @@ http://localhost:8080/api/doc
 
 > If you don't like swagger, you may use httpie 
 
-## HTTPIE Usage
+## HTTPie Usage
 
 * Upload file 
 
@@ -47,3 +47,22 @@ http http://localhost:8080/files file==a91e56e5b56f92e3d0ceb62532b3f99c
 http DELETE http://localhost:8080/files file==a91e56e5b56f92e3d0ceb62532b3f99c
 ```
 
+## Tests running 
+
+* To increase verbosity 
+
+```bash 
+pytest -s tests
+```
+
+* To decrease verbosity 
+
+```bash
+pytest tests
+```
+
+OR
+
+```bash
+pytest -v tests
+```
