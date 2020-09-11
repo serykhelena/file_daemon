@@ -70,6 +70,10 @@ class FileDaemon:
             "400":
                 description: Bad request
         """
+        # https://programtalk.com/python-examples/aiohttp.MultipartReader/
+        # async for data in request.content.iter_chunked(1024):
+        #     logger.debug(f"HERE!!! {data}")
+
         try:
             reader = await request.multipart()
             client_file = await reader.next()
