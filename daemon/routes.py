@@ -1,4 +1,4 @@
-from api.views import FileDaemon 
+from daemon.views import FileDaemon 
 
 
 def setup_routes(app):

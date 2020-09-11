@@ -2,8 +2,8 @@ import logging
 
 from aiohttp import web
 
-from tools.hash import generate_hash, get_subfolder_name
-from tools.files import save_file, get_path_to_file, delete_file
+from daemon.hash import generate_hash, get_subfolder_name
+from daemon.files import save_file, get_path_to_file, delete_file
 
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
